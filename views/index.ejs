@@ -1,0 +1,100 @@
+<h3>Add New Department</h3>
+<form method="POST" action="/dept/add">
+    <input type="text" name="dept_no" placeholder="Department No.">
+    <input type="text" name="name" placeholder="Name">
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Add New Faculty</h3>
+<form method="POST" action="/fac/add">
+    <input type="text" name="empno" placeholder="Employee ID">
+    <input type="text" name="fac_name" placeholder="Name">
+    <input type="text" name="email" placeholder="Email ID">
+    <input type="text" name="dept_no" placeholder="Department No.">
+    <input type="text" name="desig" placeholder="Designation">
+    <input type="text" name="salary" placeholder="Salary">
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Add New Course</h3>
+<form method="POST" action="/course/add">
+    <input type="text" name="course_no" placeholder="Course ID">
+    <input type="text" name="c_name" placeholder="Name">
+    <input type="text" name="dept_no" placeholder="Department No.">
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Add New Student</h3>
+<form method="POST" action="/stud/add">
+    <input type="text" name="sid_no" placeholder="Student ID">
+    <input type="text" name="s_name" placeholder="Name">
+    <input type="text" name="email" placeholder="Email ID">
+    <input type="text" name="dept_no" placeholder="Department No.">
+    <input type="text" name="course_no" placeholder="Course ID">
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Faculty works for Department</h3>
+<form method="POST" action="/faculty/works">
+    <input type="text" name="fac_name" placeholder="Faculty Name">
+    <input type="text" name="name" placeholder="Department Name">
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Student enrolled Course</h3>
+<form method="POST" action="/student/enrolled">
+    <input type="text" name="s_name" placeholder="Student Name">
+    <input type="text" name="c_name" placeholder="Course Name">
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Faculty teach Course</h3>
+<form method="POST" action="/faculty/teach">
+    <input type="text" name="fac_name" placeholder="Faculty Name">
+    <input type="text" name="c_name" placeholder="Course Name">
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Student studies under Department</h3>
+<form method="POST" action="/student/studies_under">
+    <input type="text" name="s_name" placeholder="Student Name">
+    <input type="text" name="name" placeholder="Department Name">
+    <input type="submit" value="Submit">
+</form>
+
+<h3>Departments</h3>
+<ul>
+    <% depts.forEach(function(dept){ %>
+        <li>
+            <%= dept.dept_no %>, <%= dept.name %>
+        </li>
+        <% }) %>
+</ul>
+
+
+<h3>Faculties</h3>
+<ul>
+    <% facs.forEach(function(fac){ %>
+        <li>
+            <%= fac.empno %>, <%= fac.fac_name %>, <%= fac.email %>, <%= fac.dept_no %>, <%= fac.desig %>, <%=fac.salary %>
+        </li>
+        <% }) %>
+</ul>
+
+<h3>Courses</h3>
+<ul>
+    <% courses.forEach(function(course){ %>
+        <li>
+            <%= course.course_no %>, <%= course.c_name %>, <%= course.dept_no %>
+        </li>
+        <% }) %>
+</ul>
+
+<h3>Students</h3>
+<ul>
+    <% studs.forEach(function(stud){ %>
+        <li>
+            <%= stud.sid_no %>, <%= stud.s_name %>, <%= stud.email %>, <%= stud.dept_no %>, <%= stud.course_no %>
+        </li>
+        <% }) %>
+</ul>
