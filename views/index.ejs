@@ -1,100 +1,198 @@
-<h3>Add New Department</h3>
-<form method="POST" action="/dept/add">
-    <input type="text" name="dept_no" placeholder="Department No.">
-    <input type="text" name="name" placeholder="Name">
-    <input type="submit" value="Submit">
-</form>
+<% include ../views/partials/header %>
 
-<h3>Add New Faculty</h3>
-<form method="POST" action="/fac/add">
-    <input type="text" name="empno" placeholder="Employee ID">
-    <input type="text" name="fac_name" placeholder="Name">
-    <input type="text" name="email" placeholder="Email ID">
-    <input type="text" name="dept_no" placeholder="Department No.">
-    <input type="text" name="desig" placeholder="Designation">
-    <input type="text" name="salary" placeholder="Salary">
-    <input type="submit" value="Submit">
-</form>
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#adddepartment" aria-expanded="false"
+        aria-controls="adddepartment" style="margin:3px; font-size:20;">
+        Add New Department
+    </a>
 
-<h3>Add New Course</h3>
-<form method="POST" action="/course/add">
-    <input type="text" name="course_no" placeholder="Course ID">
-    <input type="text" name="c_name" placeholder="Name">
-    <input type="text" name="dept_no" placeholder="Department No.">
-    <input type="submit" value="Submit">
-</form>
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addfaculty" aria-expanded="false"
+        aria-controls="addfaculty" style="margin:3px; font-size:20;">
+        Add New Faculty
+    </a>
 
-<h3>Add New Student</h3>
-<form method="POST" action="/stud/add">
-    <input type="text" name="sid_no" placeholder="Student ID">
-    <input type="text" name="s_name" placeholder="Name">
-    <input type="text" name="email" placeholder="Email ID">
-    <input type="text" name="dept_no" placeholder="Department No.">
-    <input type="text" name="course_no" placeholder="Course ID">
-    <input type="submit" value="Submit">
-</form>
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addcourse" aria-expanded="false"
+        aria-controls="addcourse" style="margin:3px; font-size:20;">
+        Add New Course
+    </a>
 
-<h3>Faculty works for Department</h3>
-<form method="POST" action="/faculty/works">
-    <input type="text" name="fac_name" placeholder="Faculty Name">
-    <input type="text" name="name" placeholder="Department Name">
-    <input type="submit" value="Submit">
-</form>
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addstudent" aria-expanded="false"
+        aria-controls="addstudent" style="margin:3px; font-size:20;">
+        Add New Student
+    </a>
 
-<h3>Student enrolled Course</h3>
-<form method="POST" action="/student/enrolled">
-    <input type="text" name="s_name" placeholder="Student Name">
-    <input type="text" name="c_name" placeholder="Course Name">
-    <input type="submit" value="Submit">
-</form>
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#facultyworks" aria-expanded="false"
+        aria-controls="facultyworks" style="margin:3px; font-size:20;"> 
+        Faculty works for Department
+    </a>
 
-<h3>Faculty teach Course</h3>
-<form method="POST" action="/faculty/teach">
-    <input type="text" name="fac_name" placeholder="Faculty Name">
-    <input type="text" name="c_name" placeholder="Course Name">
-    <input type="submit" value="Submit">
-</form>
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#studentenrolled" aria-expanded="false"
+        aria-controls="studentenrolled" style="margin:3px; font-size:20;">
+        Student enroll Course
+    </a>
 
-<h3>Student studies under Department</h3>
-<form method="POST" action="/student/studies_under">
-    <input type="text" name="s_name" placeholder="Student Name">
-    <input type="text" name="name" placeholder="Department Name">
-    <input type="submit" value="Submit">
-</form>
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#facultyteach" aria-expanded="false"
+        aria-controls="facultyteach" style="margin:3px; font-size:20;">
+        Faculty teach Course
+    </a>
 
-<h3>Departments</h3>
-<ul>
-    <% depts.forEach(function(dept){ %>
-        <li>
-            <%= dept.dept_no %>, <%= dept.name %>
-        </li>
-        <% }) %>
-</ul>
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#studentstudies" aria-expanded="false"
+        aria-controls="studentstudies" style="margin:3px; font-size:20;">
+        Student studies under Department
+    </a>
+
+    <br></br>
+
+    <div class="collapse" id="adddepartment">
+        <div class="well">
+            <h3>Add New Department</h3>
+            <form method="POST" action="/dept/add">
+                <input type="text" name="dept_no" placeholder="Department No.">
+                <input type="text" name="name" placeholder="Name">
+                <input type="submit" value="Submit" class="btn btn-default btn-sm">
+            </form>
+        </div>
+    </div>
 
 
-<h3>Faculties</h3>
-<ul>
-    <% facs.forEach(function(fac){ %>
-        <li>
-            <%= fac.empno %>, <%= fac.fac_name %>, <%= fac.email %>, <%= fac.dept_no %>, <%= fac.desig %>, <%=fac.salary %>
-        </li>
-        <% }) %>
-</ul>
+    <div class="collapse" id="addfaculty">
+        <div class="well">
+            <h3>Add New Faculty</h3>
+            <form method="POST" action="/fac/add">
+                <input type="text" name="empno" placeholder="Employee ID">
+                <input type="text" name="fac_name" placeholder="Name">
+                <input type="text" name="email" placeholder="Email ID">
+                <input type="text" name="dept_no" placeholder="Department No.">
+                <input type="text" name="desig" placeholder="Designation">
+                <input type="text" name="salary" placeholder="Salary">
+                <input type="submit" value="Submit" class="btn btn-default btn-sm">
+            </form>
+        </div>
+    </div>
 
-<h3>Courses</h3>
-<ul>
-    <% courses.forEach(function(course){ %>
-        <li>
-            <%= course.course_no %>, <%= course.c_name %>, <%= course.dept_no %>
-        </li>
-        <% }) %>
-</ul>
 
-<h3>Students</h3>
-<ul>
-    <% studs.forEach(function(stud){ %>
-        <li>
-            <%= stud.sid_no %>, <%= stud.s_name %>, <%= stud.email %>, <%= stud.dept_no %>, <%= stud.course_no %>
-        </li>
-        <% }) %>
-</ul>
+    <div class="collapse" id="addcourse">
+        <div class="well">
+            <h3>Add New Course</h3>
+            <form method="POST" action="/course/add">
+                <input type="text" name="course_no" placeholder="Course ID">
+                <input type="text" name="c_name" placeholder="Name">
+                <input type="text" name="dept_no" placeholder="Department No.">
+                <input type="submit" value="Submit" class="btn btn-default btn-sm">
+            </form>
+        </div>
+    </div>
+
+
+    <div class="collapse" id="addstudent">
+        <div class="well">
+            <h3>Add New Student</h3>
+            <form method="POST" action="/stud/add">
+                <input type="text" name="sid_no" placeholder="Student ID">
+                <input type="text" name="s_name" placeholder="Name">
+                <input type="text" name="email" placeholder="Email ID">
+                <input type="text" name="dept_no" placeholder="Department No.">
+                <input type="text" name="course_no" placeholder="Course ID">
+                <input type="submit" value="Submit" class="btn btn-default btn-sm">
+            </form>
+        </div>
+    </div>
+
+
+    <div class="collapse" id="facultyworks">
+        <div class="well">
+            <h3>Faculty works for Department</h3>
+            <form method="POST" action="/faculty/works">
+                <input type="text" name="fac_name" placeholder="Faculty Name">
+                <input type="text" name="name" placeholder="Department Name">
+                <input type="submit" value="Submit" class="btn btn-default btn-sm">
+            </form>
+        </div>
+    </div>
+
+
+    <div class="collapse" id="studentenrolled">
+        <div class="well">
+            <h3>Student enrolled Course</h3>
+            <form method="POST" action="/student/enrolled">
+                <input type="text" name="s_name" placeholder="Student Name">
+                <input type="text" name="c_name" placeholder="Course Name">
+                <input type="submit" value="Submit" class="btn btn-default btn-sm">
+            </form>
+        </div>
+    </div>
+
+
+    <div class="collapse" id="facultyteach">
+        <div class="well">
+            <h3>Faculty teach Course</h3>
+            <form method="POST" action="/faculty/teach">
+                <input type="text" name="fac_name" placeholder="Faculty Name">
+                <input type="text" name="c_name" placeholder="Course Name">
+                <input type="submit" value="Submit" class="btn btn-default btn-sm">
+            </form>
+        </div>
+    </div>
+
+
+    <div class="collapse" id="studentstudies">
+        <div class="well">
+            <h3>Student studies under Department</h3>
+            <form method="POST" action="/student/studies_under">
+                <input type="text" name="s_name" placeholder="Student Name">
+                <input type="text" name="name" placeholder="Department Name">
+                <input type="submit" value="Submit" class="btn btn-default btn-sm">
+            </form>
+        </div>
+    </div>
+
+
+    <h3>Departments</h3>
+    <div class="row">
+        <% depts.forEach(function(dept){ %>
+            <div class="col-md-2">
+                <div class="well"> <i class="fa fa-university"></i>
+                    <%= dept.dept_no %>, <%= dept.name %>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+
+
+
+    <h3>Faculties</h3>
+    <div class="row">
+        <% facs.forEach(function(fac){ %>
+            <div class="col-md-2">
+                <div class="well"> <i class="fa fa-user"></i>
+                    <%= fac.empno %>, <%= fac.fac_name %>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+
+    <h3>Courses</h3>
+    <div class="row">
+        <% courses.forEach(function(course){ %>
+            <div class="col-md-2">
+                <div class="well"> <i class="fa fa-leanpub"></i>
+                    <%= course.course_no %>, <%= course.c_name %>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+    <h3>Students</h3>
+    <div class="row">
+        <% studs.forEach(function(stud){ %>
+            <div class="col-md-2">
+                <div class="well"> <i class="fa fa-user"></i>
+                    <%= stud.sid_no %>, <%= stud.s_name %>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+
+    <% include ../views/partials/footer %>

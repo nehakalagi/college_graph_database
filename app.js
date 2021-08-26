@@ -1,12 +1,23 @@
 /*tslint:disabled*/
+//Defines a routing table which is used to perform different actions based on HTTP Method and URL.
 
+//Allows to dynamically render HTML Pages based on passing arguments to templates.
 var express = require('express');
 var path = require('path');
+
+//HTTP request logger middleware for node.js
+//Function will be called with three arguments tokens, req, and res, 
+//where tokens is an object with all defined tokens, req is the HTTP request and res is the HTTP response. 
 var logger = require('morgan');
+
+//Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
 var cookieParser = require('cookie-parser');
+
+// node.js middleware for handling JSON, Raw, Text and URL encoded form data.
 var bodyParser = require('body-parser');
 var neo4j = require('neo4j-driver');
 
+//instance of express
 var app = express();
 
 // view engine setup
@@ -19,11 +30,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//Driver setup using a bolt protocol
 var driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "applepie"));
 var session = driver.session();
 
 
-// Home Route
+// Department Route
 app.get('/', function (req, res) {
     var session = driver.session();
     session
@@ -45,8 +58,16 @@ app.get('/', function (req, res) {
                     var facArr = [];
 
                     result2.records.forEach(function (record) {
-                        facArr.push(record._fields[0].properties);
+                            facArr.push({id: record._fields[0].identity.low,
+                            empno: record._fields[0].properties.empno,
+                            fac_name: record._fields[0].properties.fac_name,
+                            email: record._fields[0].properties.email,
+                            dept_no: record._fields[0].properties.dept_no,
+                            desig: record._fields[0].properties.desig,
+                            salary: record._fields[0].properties.salary
+                            });
                     });
+
 
 
                     var session = driver.session();
@@ -69,7 +90,7 @@ app.get('/', function (req, res) {
                                         studArr.push(record._fields[0].properties);
                                     });
 
-
+                                    console.log(facArr);
                                     res.render('index', {
                                         depts: deptArr,
                                         facs: facArr,
@@ -109,6 +130,7 @@ app.post('/dept/add', function (req, res) {
 });
 
 app.post('/fac/add', function (req, res) {
+
     var empno = req.body.empno;
     var fac_name = req.body.fac_name;
     var email = req.body.email;
@@ -166,69 +188,69 @@ app.post('/stud/add', function (req, res) {
 });
 
 // Faculty works Route
-app.post('/faculty/works', function(req, res){
+app.post('/faculty/works', function (req, res) {
     var fac_name = req.body.fac_name;
     var name = req.body.name;
 
     var session = driver.session();
     session
-        .run("MATCH(a:Faculty {fac_name:$fac_name}), (b:Department {name:$name}) MERGE (a)-[r:WORKS_FOR]->(b) RETURN a, b", {fac_name: fac_name, name: name})
-        .then(function(result){
+        .run("MATCH(a:Faculty {fac_name:$fac_name}), (b:Department {name:$name}) MERGE (a)-[r:WORKS_FOR]->(b) RETURN a, b", { fac_name: fac_name, name: name })
+        .then(function (result) {
             res.redirect('/');
             session.close();
         })
-        .catch(function(error){
+        .catch(function (error) {
             console.log(error);
         });
 });
 
 // Student enrolled Route
-app.post('/student/enrolled', function(req, res){
+app.post('/student/enrolled', function (req, res) {
     var s_name = req.body.s_name;
     var c_name = req.body.c_name;
-    
+
     var session = driver.session();
     session
-        .run("MATCH (a:Student {s_name:$s_name}), (b:Course {c_name:$c_name}) MERGE (a)-[r:ENROLLED]->(b) RETURN a,b", {s_name: s_name, c_name: c_name})
-        .then(function(result){
+        .run("MATCH (a:Student {s_name:$s_name}), (b:Course {c_name:$c_name}) MERGE (a)-[r:ENROLLED]->(b) RETURN a,b", { s_name: s_name, c_name: c_name })
+        .then(function (result) {
             res.redirect('/');
             session.close();
         })
-        .catch(function(error){
+        .catch(function (error) {
             console.log(error);
         });
 });
 
 // Faculty teach Route
-app.post('/faculty/teach', function(req, res){
+app.post('/faculty/teach', function (req, res) {
     var fac_name = req.body.fac_name;
     var c_name = req.body.c_name;
-    
+
     var session = driver.session();
     session
-        .run("MATCH (a:Faculty {fac_name:$fac_name}), (b:Course {c_name:$c_name}) MERGE (a)-[r:TEACH]->(b) RETURN a,b", {fac_name: fac_name, c_name: c_name})
-        .then(function(result){
+        .run("MATCH (a:Faculty {fac_name:$fac_name}), (b:Course {c_name:$c_name}) MERGE (a)-[r:TEACH]->(b) RETURN a,b", { fac_name: fac_name, c_name: c_name })
+        .then(function (result) {
             res.redirect('/');
             session.close();
         })
-        .catch(function(error){
+        .catch(function (error) {
             console.log(error);
         });
 });
 
 // Student studies_under Route
-app.post('/student/studies_under', function(req, res){
+app.post('/student/studies_under', function (req, res) {
     var s_name = req.body.s_name;
     var name = req.body.name;
-    
+
     var session = driver.session();
     session
-        .run("MATCH (a:Student {s_name:$s_name}), (b:Department {name:$name}) MERGE (a)-[r:STUDIES_UNDER]->(b) RETURN a,b", {s_name: s_name, name: name})
-        .then(function(result){
+        .run("MATCH (a:Student {s_name:$s_name}), (b:Department {name:$name}) MERGE (a)-[r:STUDIES_UNDER]->(b) RETURN a,b", { s_name: s_name, name: name })
+        .then(function (result) {
             res.redirect('/');
             session.close();
         })
-        .catch(function(error){
+        .catch(function (error) {
             console.log(error);
         });
 });
